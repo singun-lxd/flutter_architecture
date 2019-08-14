@@ -41,6 +41,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_package:
+    dependency: "direct main"
+    description:
+      path: "package/flutter_package"
+      ref: HEAD
+      resolved-ref: "4786aff437d5710f52312eb543e14cfabdc9cb99"
+      url: "https://github.com/singun-lxd/flutter_app.git"
+    source: git
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

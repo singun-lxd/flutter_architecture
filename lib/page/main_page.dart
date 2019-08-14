@@ -1,5 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_architecture/bloc/main_bloc.dart';
@@ -22,9 +20,6 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final MainBloc bloc = BlocSupportWidget.of<MainBloc>(context);
     return CompatScaffold(
-      appBar: CompatAppBar(
-          title: Text('Architecture Demo')
-      ),
       body: _buildPageStream(bloc),
     );
   }
@@ -38,10 +33,14 @@ class MainLayout extends StatelessWidget {
           return CustomScrollView(
             slivers: <Widget>[
               SliverPersistentHeader(
+                delegate: _MainAppBar(),
+                pinned: true,
+              ),
+              SliverPersistentHeader(
                 delegate: _MainHeaderContent(),
               ),
               SliverGrid(
-                  delegate: _sliverGridContent(bloc),
+                  delegate: _sliverGridChild(bloc),
                   gridDelegate: _sliverGridFormat()
               ),
             ],
@@ -51,13 +50,34 @@ class MainLayout extends StatelessWidget {
   }
 }
 
+class _MainAppBar extends SliverPersistentHeaderDelegate {
+  final double height = 76;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+        alignment: Alignment.center,
+        child: CompatAppBar(title: Text('Demo')),
+    );
+  }
+
+  @override
+  double get maxExtent => height;
+
+  @override
+  double get minExtent => height;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
+}
+
 class _MainHeaderContent extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
         color: Colors.pink,
         alignment: Alignment.topCenter,
-        child: Text('Header', style: TextStyle(color: Colors.white, fontSize: 30.0)));
+        child: CompatText('Header', style: TextStyle(color: Colors.white, fontSize: 30.0)));
   }
 
   @override
@@ -70,7 +90,7 @@ class _MainHeaderContent extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
 
-SliverChildBuilderDelegate _sliverGridContent(MainBloc bloc) {
+SliverChildDelegate _sliverGridChild(MainBloc bloc) {
   Widget widgetBuilder(BuildContext context, int index) {
     var data = mainGridPage[index];
     return CompatIconButton(
@@ -85,13 +105,9 @@ SliverChildBuilderDelegate _sliverGridContent(MainBloc bloc) {
   return SliverChildBuilderDelegate(widgetBuilder, childCount: mainGridPage.length);
 }
 
-SliverGridDelegateWithFixedCrossAxisCount _sliverGridFormat() {
-  final int mainGridCrossAxisCount = 3;
-  final double mainGridMainAxisSpacing = 10.0;
-  final double mainGridCrossAxisSpacing = 10.0;
-
+SliverGridDelegate _sliverGridFormat() {
   return SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: mainGridCrossAxisCount,
-      mainAxisSpacing: mainGridMainAxisSpacing,
-      crossAxisSpacing: mainGridCrossAxisSpacing);
+      crossAxisCount: 3,
+      mainAxisSpacing: 10.0,
+      crossAxisSpacing: 10.0);
 }

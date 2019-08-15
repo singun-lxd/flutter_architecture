@@ -38,10 +38,11 @@ class MainLayout extends StatelessWidget {
               ),
               SliverPersistentHeader(
                 delegate: _MainHeaderContent(),
+                pinned: true,
               ),
               SliverGrid(
-                  delegate: _sliverGridChild(bloc),
-                  gridDelegate: _sliverGridFormat()
+                delegate: _SliverGridChild(bloc).builderDelegate,
+                gridDelegate: _sliverGridFormat()
               ),
             ],
           );
@@ -91,19 +92,52 @@ class _MainHeaderContent extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
 
-SliverChildDelegate _sliverGridChild(MainBloc bloc) {
-  Widget widgetBuilder(BuildContext context, int index) {
+class _SliverGridChild {
+  _SliverGridChild(this.bloc) {
+    _delegate = SliverChildBuilderDelegate(_widgetBuilder, childCount: mainGridPage.length);
+  }
+
+  final MainBloc bloc;
+  SliverChildBuilderDelegate _delegate;
+
+  get builderDelegate => _delegate;
+  
+  Widget _widgetBuilder(BuildContext context, int index) {
     final data = mainGridPage[index];
-    return CompatIconButton(
-      icon: Icon(data.icon),
-      onPressed: () {
-        Navigator.of(context).pushNamed(data.routeName);
-        bloc.viewJumpSink.add(index);
-      },
+    return Column(
+      children: <Widget>[
+        _iconWidget(context, data, index),
+        Text(data.title,
+            style: TextStyle(color: data.routeName == null ? Colors.grey: Colors.black)),
+      ],
     );
   }
 
-  return SliverChildBuilderDelegate(widgetBuilder, childCount: mainGridPage.length);
+  // 点击事件
+  Widget _iconWidget(BuildContext context, GridPageContent data, int index) {
+    if (data.routeName != null) {
+      return _getIconButton(data, () {
+        Navigator.of(context).pushNamed(data.routeName);
+        bloc.viewJumpSink.add(index);
+      });
+    } else {
+      return Container(
+        foregroundDecoration: BoxDecoration(
+          color: Colors.grey,
+          backgroundBlendMode: BlendMode.saturation,
+        ),
+        child: _getIconButton(data, null),
+      );
+    }
+  }
+
+  Widget _getIconButton(GridPageContent data, VoidCallback onPressed) {
+    return CompatIconButton(
+        materialIcon: Icon(data.materialIcon),
+        cupertinoIcon: Icon(data.cupertinoIcon),
+        onPressed: onPressed,
+    );
+  }
 }
 
 SliverGridDelegate _sliverGridFormat() {

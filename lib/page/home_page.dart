@@ -40,26 +40,28 @@ class HomeLayout extends StatelessWidget {
   }
 
   Widget _buildMenu() {
-    return PopupMenuButton<int>(
-      icon: Icon(
-          isMaterial ? Icons.more_vert: CupertinoIcons.ellipsis),
-      itemBuilder: (context) => [
-        PopupMenuItem<int>(
-          value: 1,
-          child: Text("Upgrade"),
-        ),
-        PopupMenuItem<int>(
-          value: 2,
-          child: Text("Settings"),
-        ),
-        PopupMenuItem<int>(
-          value: 3,
-          child: Text("About"),
-        )
-      ],
-      onSelected: (int value) {
+    return Material(
+      child: PopupMenuButton<int>(
+        icon: Icon(
+            isMaterial ? Icons.more_vert: CupertinoIcons.ellipsis),
+        itemBuilder: (context) => [
+          PopupMenuItem<int>(
+            value: 1,
+            child: Text("Upgrade"),
+          ),
+          PopupMenuItem<int>(
+            value: 2,
+            child: Text("Settings"),
+          ),
+          PopupMenuItem<int>(
+            value: 3,
+            child: Text("About"),
+          )
+        ],
+        onSelected: (int value) {
 
-      },
+        },
+      )
     );
   }
 

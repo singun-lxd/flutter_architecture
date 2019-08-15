@@ -48,12 +48,15 @@ class HomeMenu {
     return CompatIconButton(
       cupertinoIcon: Icon(CupertinoIcons.ellipsis),
       onPressed: () {
-        showCupertinoModalPopup<int>(context: context, builder:(context) {
-          return CupertinoActionSheet(
-            actions: actionList,
-            cancelButton: convert(cancelMenu),
-          );
-        });
+        showCupertinoModalPopup<int>(
+          context: context,
+          builder: (context) {
+            return CupertinoActionSheet(
+              actions: actionList,
+              cancelButton: convert(cancelMenu),
+            );
+          }
+        );
       },
     );
   }

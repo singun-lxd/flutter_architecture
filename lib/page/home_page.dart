@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_architecture/bloc/home_bloc.dart';
-import 'package:flutter_architecture/page/home_grid_items.dart';
+import 'package:flutter_architecture/constant/home_grid_items.dart';
+import 'package:flutter_architecture/page/home_menu.dart';
 import 'package:flutter_architecture/widget/bloc_support_widget.dart';
 import 'package:flutter_package/flutter_widget_compat.dart';
 
@@ -31,37 +32,11 @@ class HomeLayout extends StatelessWidget {
 
             },
           ),
-          _buildMenu(),
+          HomeMenu.of(context).buildButton(),
         ],
       ),
       body: _buildPageStream(bloc),
       cupertinoContentPadding: true,
-    );
-  }
-
-  Widget _buildMenu() {
-    return Material(
-      child: PopupMenuButton<int>(
-        icon: Icon(
-            isMaterial ? Icons.more_vert: CupertinoIcons.ellipsis),
-        itemBuilder: (context) => [
-          PopupMenuItem<int>(
-            value: 1,
-            child: Text("Upgrade"),
-          ),
-          PopupMenuItem<int>(
-            value: 2,
-            child: Text("Settings"),
-          ),
-          PopupMenuItem<int>(
-            value: 3,
-            child: Text("About"),
-          )
-        ],
-        onSelected: (int value) {
-
-        },
-      )
     );
   }
 

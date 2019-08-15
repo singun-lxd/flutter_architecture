@@ -20,7 +20,9 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocSupportWidget.of<MainBloc>(context);
     return CompatScaffold(
+      appBar: CompatAppBar(title: Text('Demo')),
       body: _buildPageStream(bloc),
+      cupertinoContentPadding: true,
     );
   }
 
@@ -33,12 +35,7 @@ class MainLayout extends StatelessWidget {
           return CustomScrollView(
             slivers: <Widget>[
               SliverPersistentHeader(
-                delegate: _MainAppBar(),
-                pinned: true,
-              ),
-              SliverPersistentHeader(
                 delegate: _MainHeaderContent(),
-                pinned: true,
               ),
               SliverGrid(
                 delegate: _SliverGridChild(bloc).builderDelegate,
@@ -49,27 +46,6 @@ class MainLayout extends StatelessWidget {
         }
     );
   }
-}
-
-class _MainAppBar extends SliverPersistentHeaderDelegate {
-  static const double height = 80.0;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-        alignment: Alignment.center,
-        child: CompatAppBar(title: Text('Demo')),
-    );
-  }
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
 
 class _MainHeaderContent extends SliverPersistentHeaderDelegate {
@@ -101,7 +77,8 @@ class _SliverGridChild {
   SliverChildBuilderDelegate _delegate;
 
   get builderDelegate => _delegate;
-  
+
+  // 每一个Grid项的布局定义
   Widget _widgetBuilder(BuildContext context, int index) {
     final data = mainGridPage[index];
     return Column(
@@ -113,7 +90,7 @@ class _SliverGridChild {
     );
   }
 
-  // 点击事件
+  // 按钮点击事件处理
   Widget _iconWidget(BuildContext context, GridPageContent data, int index) {
     if (data.routeName != null) {
       return _getIconButton(data, () {

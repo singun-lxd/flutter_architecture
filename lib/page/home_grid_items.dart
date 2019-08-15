@@ -13,11 +13,11 @@ class GridPageContent {
   final IconData cupertinoIcon;
 }
 
-class MainGridIndex {
+class HomeGridIndex {
   static final int pageContent = 0;
 }
 
-final List<GridPageContent> mainGridPage = [
+final List<GridPageContent> homeGridPage = [
   GridPageContent(PageRoutes.pageContent, "Quran", Icons.book, CupertinoIcons.book_solid),
   GridPageContent(PageRoutes.pageContent, "Prayer", Icons.accessibility, CupertinoIcons.person_solid),
   GridPageContent(PageRoutes.pageContent, "Qibla", Icons.public),

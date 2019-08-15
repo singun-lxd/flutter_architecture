@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter_architecture/page/main_grid_items.dart';
 import 'package:flutter_architecture/widget/bloc_support_widget.dart';
 
-class MainBloc implements BlocBase {
+class HomeBloc implements BlocBase {
   // 处理触摸事件，以及对外通知
   StreamController<int> _touchController = StreamController<int>();
   StreamSink<int> get _inTouch => _touchController.sink;
@@ -13,7 +12,7 @@ class MainBloc implements BlocBase {
   StreamController<int> _viewJumpController = StreamController<int>();
   StreamSink get viewJumpSink => _viewJumpController.sink;
 
-  MainBloc(){
+  HomeBloc(){
     _viewJumpController.stream
         .listen(_switchPage);
   }

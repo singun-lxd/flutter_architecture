@@ -1,32 +1,69 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_architecture/bloc/main_bloc.dart';
-import 'package:flutter_architecture/page/main_grid_items.dart';
+import 'package:flutter_architecture/bloc/home_bloc.dart';
+import 'package:flutter_architecture/page/home_grid_items.dart';
 import 'package:flutter_architecture/widget/bloc_support_widget.dart';
 import 'package:flutter_package/flutter_widget_compat.dart';
 
-class MainPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocSupportWidget<MainBloc>(
-      bloc: MainBloc(),
-      child: MainLayout(),
+    return BlocSupportWidget<HomeBloc>(
+      bloc: HomeBloc(),
+      child: HomeLayout(),
     );
   }
 }
 
-class MainLayout extends StatelessWidget {
+class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocSupportWidget.of<MainBloc>(context);
+    final bloc = BlocSupportWidget.of<HomeBloc>(context);
     return CompatScaffold(
-      appBar: CompatAppBar(title: Text('Demo')),
+      appBar: CompatAppBar(
+        title: Text('Demo'),
+        trailingActions: <Widget>[
+          CompatIconButton(
+            materialIcon: Icon(Icons.share),
+            cupertinoIcon: Icon(CupertinoIcons.share),
+            onPressed: () {
+
+            },
+          ),
+          _buildMenu(),
+        ],
+      ),
       body: _buildPageStream(bloc),
       cupertinoContentPadding: true,
     );
   }
 
-  Widget _buildPageStream(MainBloc bloc) {
+  Widget _buildMenu() {
+    return PopupMenuButton<int>(
+      icon: Icon(
+          isMaterial ? Icons.more_vert: CupertinoIcons.ellipsis),
+      itemBuilder: (context) => [
+        PopupMenuItem<int>(
+          value: 1,
+          child: Text("Upgrade"),
+        ),
+        PopupMenuItem<int>(
+          value: 2,
+          child: Text("Settings"),
+        ),
+        PopupMenuItem<int>(
+          value: 3,
+          child: Text("About"),
+        )
+      ],
+      onSelected: (int value) {
+
+      },
+    );
+  }
+
+  Widget _buildPageStream(HomeBloc bloc) {
     return StreamBuilder<int>(
         stream: bloc.outPageStream,
         initialData: 0,
@@ -70,17 +107,17 @@ class _MainHeaderContent extends SliverPersistentHeaderDelegate {
 
 class _SliverGridChild {
   _SliverGridChild(this.bloc) {
-    _delegate = SliverChildBuilderDelegate(_widgetBuilder, childCount: mainGridPage.length);
+    _delegate = SliverChildBuilderDelegate(_widgetBuilder, childCount: homeGridPage.length);
   }
 
-  final MainBloc bloc;
+  final HomeBloc bloc;
   SliverChildBuilderDelegate _delegate;
 
   get builderDelegate => _delegate;
 
   // 每一个Grid项的布局定义
   Widget _widgetBuilder(BuildContext context, int index) {
-    final data = mainGridPage[index];
+    final data = homeGridPage[index];
     return Column(
       children: <Widget>[
         _iconWidget(context, data, index),

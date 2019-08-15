@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
     return new CompatApp(
       title: 'Flutter Architecture',
       material: (_) => MaterialAppData(theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.green,
       )),
       cupertino: (_) => CupertinoAppData(theme: CupertinoThemeData(
-        primaryColor: Colors.pink,
+        primaryColor: Colors.green,
       )),
       home: BlocSupportWidget<MainBloc>(
         bloc: MainBloc(),

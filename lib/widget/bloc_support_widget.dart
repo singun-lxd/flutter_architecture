@@ -1,11 +1,9 @@
-// 所有 BLoCs 的通用接口
 import 'package:flutter/material.dart';
 
 abstract class BlocBase {
   void dispose();
 }
 
-// 通用 BLoC provider
 class BlocSupportWidget<T extends BlocBase> extends StatefulWidget {
   BlocSupportWidget({
     Key key,

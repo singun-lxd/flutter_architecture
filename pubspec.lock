@@ -46,7 +46,7 @@ packages:
     description:
       path: "package/flutter_package"
       ref: HEAD
-      resolved-ref: "4786aff437d5710f52312eb543e14cfabdc9cb99"
+      resolved-ref: "1605d9591af1a2297dd2c0e020cd47ec0183afa9"
       url: "https://github.com/singun-lxd/flutter_app.git"
     source: git
     version: "0.0.1"

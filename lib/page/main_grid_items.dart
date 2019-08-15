@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_architecture/page/page_routes.dart';
 
 class GridPageContent {
-  GridPageContent(this.routeName, this.icon);
+  const GridPageContent(this.routeName, this.icon);
 
   final String routeName;
   final IconData icon;
 }
 
 class MainGridIndex {
-  static final pageContent = 0;
+  static final int pageContent = 0;
 }
 
 final List<GridPageContent> mainGridPage = [

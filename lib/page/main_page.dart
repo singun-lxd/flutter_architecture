@@ -18,7 +18,7 @@ class MainPage extends StatelessWidget {
 class MainLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final MainBloc bloc = BlocSupportWidget.of<MainBloc>(context);
+    final bloc = BlocSupportWidget.of<MainBloc>(context);
     return CompatScaffold(
       body: _buildPageStream(bloc),
     );
@@ -51,7 +51,7 @@ class MainLayout extends StatelessWidget {
 }
 
 class _MainAppBar extends SliverPersistentHeaderDelegate {
-  final double height = 76;
+  static const double height = 80.0;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -72,10 +72,11 @@ class _MainAppBar extends SliverPersistentHeaderDelegate {
 }
 
 class _MainHeaderContent extends SliverPersistentHeaderDelegate {
+
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-        color: Colors.pink,
+        color: compatThemePrimaryColor(context),
         alignment: Alignment.topCenter,
         child: CompatText('Header', style: TextStyle(color: Colors.white, fontSize: 30.0)));
   }
@@ -84,7 +85,7 @@ class _MainHeaderContent extends SliverPersistentHeaderDelegate {
   double get maxExtent => 300.0;
 
   @override
-  double get minExtent => 0;
+  double get minExtent => 0.0;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
@@ -92,7 +93,7 @@ class _MainHeaderContent extends SliverPersistentHeaderDelegate {
 
 SliverChildDelegate _sliverGridChild(MainBloc bloc) {
   Widget widgetBuilder(BuildContext context, int index) {
-    var data = mainGridPage[index];
+    final data = mainGridPage[index];
     return CompatIconButton(
       icon: Icon(data.icon),
       onPressed: () {
